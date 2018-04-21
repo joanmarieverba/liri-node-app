@@ -1,10 +1,11 @@
+// Include .env file
 require("dotenv").config();
 
 // Include the request npm package 
 let request = require("request");
 
+// Retrieve the keys
 let keys = require('./keys.js');
-//console.log("keys ", keys);
 
 // Load the fs package to read and write
 let fs = require("fs");
@@ -64,8 +65,12 @@ function song () {
             console.log('Error occurred: ' + err);
             return;
         }
-
-        console.log("This is the spotify return ", data.tracks.items[0]);
+        console.log("This is the artist: ", data.tracks.items[0].artists[0].name);
+        console.log("This is the song's name: ", input);
+        console.log("This is the preview link: ", data.tracks.items[0].preview_url);
+        console.log("This is the album: ", data.tracks.items[0].album.name);
+        console.log("This is the spotify ", data.tracks.items[0].name);
+        
     });
 };
 
@@ -127,9 +132,6 @@ function whatever() {
                 movie();
                 break;
 
-            case "do-what-it-says":
-                whatever();
-                break;
         };
 
 
