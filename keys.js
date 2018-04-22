@@ -1,4 +1,4 @@
-//console.log('this is loaded');
+//Pointers to Twitter and Spotify keys
 
 exports.twitter = {
     consumer_key: process.env.TWITTER_CONSUMER_KEY,

@@ -106,7 +106,6 @@ function movie() {
         } else {
             console.log("No response");
         }
-
     });
 };
 
@@ -139,8 +138,6 @@ function whatever() {
                 break;
 
         };
-
-
     });
 };
 
