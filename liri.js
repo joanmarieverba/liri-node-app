@@ -45,7 +45,9 @@ function tweets () {
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
             for (i = 0; i < 20; i++) {
+                console.log(tweets[i].created_at);
                 console.log(tweets[i].text);
+                console.log("-------------------------");
             };
         } else {
             console.log("Error in tweet retrieval");
@@ -60,17 +62,24 @@ function song () {
     let Spotify = require('node-spotify-api');
     let spotify = new Spotify(keys.spotify);
 
+    if (input === undefined) { input = "The Sign" };
+
     spotify.search({type: 'track', query: input}, function (err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
             return;
         }
-        console.log("This is the artist: ", data.tracks.items[0].artists[0].name);
-        console.log("This is the song's name: ", input);
-        console.log("This is the preview link: ", data.tracks.items[0].preview_url);
-        console.log("This is the album: ", data.tracks.items[0].album.name);
-        console.log("This is the spotify ", data.tracks.items[0].name);
-        
+        let index = 0;
+        for (i = 0; i < data.tracks.items.length; i++) {
+            //if the first item is a match, we take it; otherwise, we search
+            if (data.tracks.items[0].name !== input && input === data.tracks.items[i].name) {
+                index = i;
+            }
+        }
+        console.log("This is the artist: ", data.tracks.items[index].artists[0].name);
+        console.log("This is the song's name:  ", data.tracks.items[index].name);
+        console.log("This is the preview link: ", data.tracks.items[index].preview_url);
+        console.log("This is the album: ", data.tracks.items[index].album.name);
     });
 };
 
@@ -83,9 +92,6 @@ function movie() {
 
     // Then run a request to the OMDB API with the movie specified
     var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
-
-    // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
 
     request(queryUrl, function (error, response, body) {
 
